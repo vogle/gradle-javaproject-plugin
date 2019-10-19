@@ -25,7 +25,7 @@ class BasePlugin implements Plugin<Project> {
 
     static int PLUGINS_IN_PROJECT = 0
 
-    static String ENV_LOCAL = "LOCAL"
+    static String ENV_DEV = "DEV"
     static String ENV_CI = "CI"
 
     static boolean isFirstPlugin() {
@@ -51,19 +51,22 @@ class BasePlugin implements Plugin<Project> {
         if (System.getenv('CI')) {
             project.ext.env = ENV_CI
         } else {
-            project.ext.env = ENV_LOCAL
+            project.ext.env = ENV_DEV
         }
 
         if (firstPlugin) {
             Package pkg = this.class.getPackage()
             String thisPluginVersion = (pkg == null) ? "" : pkg.getImplementationVersion()
 
+            String name = "Gradle JavaProject Plugin"
+            if (thisPluginVersion) {
+                name += " v${thisPluginVersion}"
+            }
+
             def logLine = "+----------------------------------------------------------+"
 
             project.logger.quiet "${logLine}"
-            project.logger.quiet " .-.-. .-.-. .-.-. .-.-. .-.-.          Java Project Plugin "
-            project.logger.quiet " '. V )'. O )'. G )'. L )'. E )               by vogle labs "
-            project.logger.quiet "   ).'   ).'   ).'   ).'   ).' ${new Date()} "
+            project.logger.quiet " ${name}"
             project.logger.quiet "${logLine}"
 
             if (System.getProperty('os.name')) {
@@ -76,16 +79,13 @@ class BasePlugin implements Plugin<Project> {
                 project.logger.quiet " JVM : ${System.getProperty('java.vm.name')}"
             }
             project.logger.quiet " Gradle : v${project.gradle.gradleVersion}"
-            if (thisPluginVersion) {
-                project.logger.quiet " vogle-javaproject-plugin : v${thisPluginVersion}"
-            }
             project.logger.quiet "${logLine}"
         }
 
         // Apply base
         project.plugins.apply(org.gradle.api.plugins.BasePlugin)
 
-        if (ENV_LOCAL == project.ext.env) {
+        if (ENV_DEV == project.ext.env) {
             // Apply IDEA
             project.plugins.apply(IdeaPlugin)
 

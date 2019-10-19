@@ -1,10 +1,12 @@
 plugins {
-    id 'groovy'
-    id 'java-gradle-plugin'
+    id "com.gradle.plugin-publish" version "0.10.1"
+    id "groovy"
+    id "java-gradle-plugin"
 }
 
-group 'com.vogle.gradle'
-description 'Grdle JavaProject Plugin'
+version = "0.0.1"
+group = "com.vogle.gradle"
+description = "Grdle JavaProject Plugin"
 
 repositories {
     gradlePluginPortal()
@@ -12,41 +14,109 @@ repositories {
 
 dependencies {
     implementation 'io.spring.gradle:dependency-management-plugin:1.+'
-    implementation 'io.franzbecker:gradle-lombok:2.+'
+    implementation 'io.franzbecker:gradle-lombok:3.+'
+    implementation 'com.netflix.nebula:gradle-info-plugin:5.+'
 
-    testImplementation 'org.spockframework:spock-core:1.2-groovy-2.5'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.assertj:assertj-core:3.12.2'
+    testImplementation 'org.mockito:mockito-core:2.28.2'
 }
 
 
 gradlePlugin {
     plugins {
-        base {
-            id = 'vogle.base'
+        basePlugin {
+            id = 'vo.base'
             implementationClass = 'com.vogle.gradle.javaproject.BasePlugin'
+            displayName = 'Gradle Javaproject Base plugin'
+            description = 'Base on Javaproject'
         }
-        java {
-            id = 'vogle.java'
+        javaPlugin {
+            id = 'vo.java'
             implementationClass = 'com.vogle.gradle.javaproject.JavaPlugin'
+            displayName = 'Gradle Java plugin'
+            description = 'Default setting for java plugin, include dependency-manager & lombok'
         }
-        javaLibrary {
-            id = 'vogle.java-library'
+        javaLibraryPlugin {
+            id = 'vo.java-library'
             implementationClass = 'com.vogle.gradle.javaproject.JavaLibraryPlugin'
+            displayName = 'Gradle Java Library plugin'
+            description = 'Default setting for java-library plugin, include dependency-manager & lombok'
         }
-        integrationTest {
-            id = 'vogle.integration-test'
+        integrationTestPlugin {
+            id = 'vo.integration-test'
             implementationClass = 'com.vogle.gradle.javaproject.IntegrationTestPlugin'
+            displayName = 'Gradle Integration Test plugin'
+            description = 'Create integration test environments for java'
         }
-        codeQuality {
-            id = 'vogle.code-quality'
+        codeQualityPlugin {
+            id = 'vo.code-quality'
             implementationClass = 'com.vogle.gradle.javaproject.CodeQualityPlugin'
+            displayName = 'Gradle Integration Test plugin'
+            description = 'Create integration test environments for java'
         }
-        report {
-            id = 'vogle.report'
+        reportPlugin {
+            id = 'vo.report'
             implementationClass = 'com.vogle.gradle.javaproject.ReportPlugin'
+            displayName = 'Gradle Integration Test plugin'
+            description = 'Create integration test environments for java'
         }
-        archive {
-            id = 'vogle.archive'
+        archivePlugin {
+            id = 'vo.archive'
             implementationClass = 'com.vogle.gradle.javaproject.ArchivePlugin'
+            displayName = 'Gradle Integration Test plugin'
+            description = 'Create integration test environments for java'
         }
+    }
+}
+
+pluginBundle {
+    website = 'http://vogle.com'
+    vcsUrl = 'https://github.com/vogle/gradle-javaproject-plugin'
+    description = 'Gradle Javaproject Plugin'
+
+    plugins {
+        basePlugin {
+            displayName = 'Gradle Javaproject Base plugin'
+            description = 'Base on Javaproject'
+            tags = ['vogle', 'java', 'base']
+        }
+        javaPlugin {
+            displayName = 'Gradle Java plugin'
+            description = 'Default setting for java plugin, include dependency-manager & lombok'
+            tags = ['vogle', 'java', 'lombok', 'dependency manager', 'spring']
+        }
+        javaLibraryPlugin {
+            displayName = 'Gradle Java Library plugin'
+            description = 'Default setting for java-library plugin, include dependency-manager & lombok'
+            tags = ['vogle', 'java', 'lombok', 'dependency manager', 'library', 'spring']
+        }
+        integrationTestPlugin {
+            displayName = 'Gradle Integration Test plugin'
+            description = 'Create integration test environments for java'
+            tags = ['vogle', 'java', 'integration test', 'test']
+        }
+        codeQualityPlugin {
+            displayName = 'Gradle Code Quality plugin'
+            description = 'Make environments for code quality by Checkstyle & PMD'
+            tags = ['vogle', 'java', 'code quality', 'quality', 'checkstyle', 'pmd']
+        }
+        reportPlugin {
+            displayName = 'Gradle Report plugin'
+            description = 'Generating test report, dependency report & jacoco report'
+            tags = ['vogle', 'java', 'test', 'jacoco', 'report']
+        }
+        archivePlugin {
+            displayName = 'Gradle Archive plugin'
+            description = 'Build to archieve for Sources, Javadoc and Library'
+            tags = ['vogle', 'java', 'achive', 'manifest', 'javadoc', 'sourceJar']
+        }
+
+    }
+
+    mavenCoordinates {
+        groupId = "$project.group"
+        artifactId = "$project.name"
+        version = "$project.version"
     }
 }

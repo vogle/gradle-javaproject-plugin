@@ -67,7 +67,7 @@ class ReportPlugin implements Plugin<Project> {
         if (project == project.rootProject && !project.subprojects.isEmpty()) {
             project.tasks.create('allTestReport', TestReport) {
                 description = 'Aggregates test reports of all projects.'
-                group 'reporting'
+                group "reporting"
 
                 destinationDir = project.file("$project.buildDir/reports/tests")
                 reportOn project.subprojects*.tasks*.withType(Test).collect()
@@ -81,7 +81,7 @@ class ReportPlugin implements Plugin<Project> {
     def addTaskJacocoCoverageReport = { Project project ->
         if (project == project.rootProject && !project.subprojects.isEmpty()) {
             project.tasks.create('jacocoCoverageReport', JacocoReport) {
-                description = 'Generates an aggregate report from all subprojects'
+                description = 'Generates an aggregate report from all sub-projects'
                 group = "reporting"
 
                 executionData project.fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")

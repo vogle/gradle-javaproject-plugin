@@ -1,6 +1,6 @@
 package com.vogle.gradle.javaproject
 
-
+import nebula.plugin.info.InfoPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
@@ -31,7 +31,7 @@ class ArchivePlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         project.plugins.withType(JavaBasePlugin) {
-//            project.plugins.apply(InfoPlugin)
+            project.plugins.apply(InfoPlugin)
 
             configureSourceJar(project)
             configureJavadocJar(project)
@@ -45,8 +45,8 @@ class ArchivePlugin implements Plugin<Project> {
             group 'build'
             description = 'Assembles a jar archive containing the project sources.'
             from project.sourceSets.main.allSource
-            classifier 'sources'
-            extension 'jar'
+            archiveClassifier 'sources'
+            archiveExtension 'jar'
             dependsOn project.tasks.getByName('classes')
         }
         project.artifacts.add(Dependency.ARCHIVES_CONFIGURATION, project.sourceJar)
@@ -58,8 +58,8 @@ class ArchivePlugin implements Plugin<Project> {
             group 'build'
             description = 'Assembles a jar archive containing the Javadocs.'
             from javadocTask.destinationDir
-            classifier 'javadoc'
-            extension 'jar'
+            archiveClassifier 'javadoc'
+            archiveExtension 'jar'
             dependsOn javadocTask
         }
         project.artifacts.add(Dependency.ARCHIVES_CONFIGURATION, project.javadocJar)

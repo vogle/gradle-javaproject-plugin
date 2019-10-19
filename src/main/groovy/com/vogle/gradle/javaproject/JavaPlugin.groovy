@@ -38,8 +38,8 @@ class JavaPlugin implements Plugin<Project> {
 
         project.plugins.withType(IdeaPlugin) {
             project.idea.module {
-                downloadJavadoc = true
                 downloadSources = true
+                downloadJavadoc = true
             }
         }
         project.plugins.withType(EclipsePlugin) {
@@ -58,7 +58,7 @@ class JavaPlugin implements Plugin<Project> {
             options.encoding = "UTF-8"
             options.use = true
             options.author = true
-            options.version = false
+            options.version = true
             options.addStringOption('Xdoclint:none', '-quiet')
 
             if (JavaVersion.current().isJava9Compatible()) {
@@ -71,9 +71,6 @@ class JavaPlugin implements Plugin<Project> {
 
         // apply io.franzbecker.gradle-lombok
         project.plugins.apply(LombokPlugin)
-        project.lombok {
-            version = '2.+'
-        }
 
         project.sourceSets.main.allSource.srcDirs.flatten()*.mkdirs()
         project.sourceSets.test.allSource.srcDirs.flatten()*.mkdirs()
