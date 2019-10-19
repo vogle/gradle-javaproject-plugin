@@ -4,7 +4,7 @@ plugins {
     id "java-gradle-plugin"
 }
 
-version = "0.0.1"
+version = "0.0.5"
 group = "com.vogle.gradle"
 description = "Grdle JavaProject Plugin"
 
@@ -26,43 +26,43 @@ dependencies {
 gradlePlugin {
     plugins {
         basePlugin {
-            id = 'vo.base'
+            id = 'vogle.base'
             implementationClass = 'com.vogle.gradle.javaproject.BasePlugin'
             displayName = 'Gradle Javaproject Base plugin'
             description = 'Base on Javaproject'
         }
         javaPlugin {
-            id = 'vo.java'
+            id = 'vogle.java'
             implementationClass = 'com.vogle.gradle.javaproject.JavaPlugin'
             displayName = 'Gradle Java plugin'
             description = 'Default setting for java plugin, include dependency-manager & lombok'
         }
         javaLibraryPlugin {
-            id = 'vo.java-library'
+            id = 'vogle.java-library'
             implementationClass = 'com.vogle.gradle.javaproject.JavaLibraryPlugin'
             displayName = 'Gradle Java Library plugin'
             description = 'Default setting for java-library plugin, include dependency-manager & lombok'
         }
         integrationTestPlugin {
-            id = 'vo.integration-test'
+            id = 'vogle.integration-test'
             implementationClass = 'com.vogle.gradle.javaproject.IntegrationTestPlugin'
             displayName = 'Gradle Integration Test plugin'
             description = 'Create integration test environments for java'
         }
         codeQualityPlugin {
-            id = 'vo.code-quality'
+            id = 'vogle.code-quality'
             implementationClass = 'com.vogle.gradle.javaproject.CodeQualityPlugin'
             displayName = 'Gradle Integration Test plugin'
             description = 'Create integration test environments for java'
         }
         reportPlugin {
-            id = 'vo.report'
+            id = 'vogle.report'
             implementationClass = 'com.vogle.gradle.javaproject.ReportPlugin'
             displayName = 'Gradle Integration Test plugin'
             description = 'Create integration test environments for java'
         }
         archivePlugin {
-            id = 'vo.archive'
+            id = 'vogle.archive'
             implementationClass = 'com.vogle.gradle.javaproject.ArchivePlugin'
             displayName = 'Gradle Integration Test plugin'
             description = 'Create integration test environments for java'
@@ -74,6 +74,7 @@ pluginBundle {
     website = 'http://vogle.com'
     vcsUrl = 'https://github.com/vogle/gradle-javaproject-plugin'
     description = 'Gradle Javaproject Plugin'
+    tags = ['java', 'integration test', 'archive', 'code quality', 'java library', 'report']
 
     plugins {
         basePlugin {
